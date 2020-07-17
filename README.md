@@ -3,8 +3,8 @@
 Laten zien hoe een 1 tot meer relatie als tabel in de database komt. De domeinklasse zijn gemaakt met behulp van JPA 
 binnen het Spring-boot framework.
 
-## Omnidirectioneel
-Omdirectioneel betekent dat je aan beide kanten van de relatie weet wie erbij hoort. In dit geval kun je er via het 
+## Bidirectioneel
+Birectioneel betekent dat je aan beide kanten van de relatie weet wie erbij hoort. In dit geval kun je er via het 
 Dog-object achterkomen wie de eigenaar is, maar je kunt ook via de eigenaar erachter komen welke honden deze heeft.
 
 Dit voorbeeld bevat de domein-klassen ApplicationUser en Dog.
