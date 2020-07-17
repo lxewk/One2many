@@ -79,4 +79,12 @@ public class Dog {
     public void setFemale(boolean female) {
         isFemale = female;
     }
+
+    public ApplicationUser getOwner() {
+        return owner;
+    }
+
+    public void setOwner(ApplicationUser owner) {
+        this.owner = owner;
+    }
 }
