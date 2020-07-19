@@ -1,6 +1,9 @@
 package nl.novi.dbexample.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -27,7 +30,8 @@ public class Dog {
     /**
      * Voor uitleg van de bi-directionele relatie met mappedBy, kun je terug bij {@link ApplicationUser}
      */
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JsonIgnoreProperties("dogs")
     private ApplicationUser owner;
 
     public long getId() {
