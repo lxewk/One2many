@@ -1,11 +1,9 @@
 package nl.novi.dbexample.model;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity
@@ -27,16 +25,9 @@ public class Dog {
     private boolean isFemale;
 
     /**
-     * Hier is het tweede deel van de relatie.
-     * verschil Lazy en Eager loading:
-     * https://stackoverflow.com/questions/2990799/difference-between-fetchtype-lazy-and-eager-in-java-persistence-api
-     *
-     * We voegen hier de annotatie JoinColumn toe, om aan te geven dat de FOREIGN-KEY die verwijst naar de ID van
-     * applicationowner opgeslagen moet worden in de kolom OWNER_ID in de database.
-     * Daaronder zeggen we met private ApplicationUser owner er 1 ApplicationUser object aan een dog object toegevoegd
-     * kan worden.
+     * Voor uitleg van de bi-directionele relatie met mappedBy, kun je terug bij {@link ApplicationUser}
      */
-    @ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne
     private ApplicationUser owner;
 
     public long getId() {

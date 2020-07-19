@@ -1,6 +1,7 @@
 package nl.novi.dbexample.model;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -30,14 +31,12 @@ public class ApplicationUser {
     private String email;
 
     /**
-     * Hier gaan we het eerste deel van de relatie programmeren. Voor de simpelheid heb ik hier een list gebruikt.
-     * Normaliter zou ik een Set gebruiken.
+     * Dog is de many van de one to many kant. Aan de many kant moet de mappedBy geconfigureerd worden. Deze geef je
+     * de naam van de variabele mee van de relatie aan de one-kant. In Dog is dat deze regel:
+     * private ApplicationUser owner;
      *
-     * Er wordt hier een relatie gelegd met het Dog-object. Deze klasse kan namelijke meerdere Dog-objecten hebben.
-     * Hier verwijs ik naar de USER_ID die we op regel 25 zo hebben genoemd en deze krijgt de naam OWNER_ID in de tabel
-     * die voor Dog wordt aangemaakt.
-     */
-    @OneToMany(mappedBy = "owner")
+     * */
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "owner")
     private List<Dog> dogs;
 
 
