@@ -37,7 +37,6 @@ public class Dog {
      * kan worden.
      */
     @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name = "OWNER_ID")
     private ApplicationUser owner;
 
     public long getId() {

@@ -1,11 +1,9 @@
 package nl.novi.dbexample.model;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import java.util.List;
 
@@ -22,7 +20,6 @@ public class ApplicationUser {
      * https://thorben-janssen.com/jpa-generate-primary-keys/
      */
     @Id
-    @Column(name="USER_ID")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
@@ -40,8 +37,7 @@ public class ApplicationUser {
      * Hier verwijs ik naar de USER_ID die we op regel 25 zo hebben genoemd en deze krijgt de naam OWNER_ID in de tabel
      * die voor Dog wordt aangemaakt.
      */
-    @OneToMany
-    @JoinColumn(name="OWNER_ID", referencedColumnName = "USER_ID")
+    @OneToMany(mappedBy = "owner")
     private List<Dog> dogs;
 
 
