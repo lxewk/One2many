@@ -17,7 +17,7 @@ public class Dog {
      */
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private long dogId;
 
     /**
      * Onderstaande properties spreken voor zich, maar kijk eens hoe de boolean in de database-tabel wordt aangemaakt.
@@ -35,11 +35,11 @@ public class Dog {
     private ApplicationUser owner;
 
     public long getId() {
-        return id;
+        return dogId;
     }
 
     public void setId(long id) {
-        this.id = id;
+        this.dogId = id;
     }
 
     public String getName() {

@@ -19,8 +19,6 @@ public class ApplicationUserController {
     "name": "Nicky",
     "email": "n@n.nl"
     }
-
-
      */
 
     @Autowired

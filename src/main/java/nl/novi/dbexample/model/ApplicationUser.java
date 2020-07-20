@@ -15,14 +15,12 @@ import java.util.List;
 public class ApplicationUser {
 
     /**
-     * Hieronder generen we de ID kolom. Deze noemen we USER_ID (regel x), zodat we er makkelijk naar kunnen wijzen voor
-     * het foreign-key gedeelte.
      * We laten op regel X hibernate het beste generation-type selecteren. Je kunt er hier meer over lezen:
      * https://thorben-janssen.com/jpa-generate-primary-keys/
      */
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Long userId;
 
     /**
      * Deze twee spreken voor zich
@@ -39,17 +37,15 @@ public class ApplicationUser {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "owner")
     private List<Dog> dogs;
 
-
     /*
     Hieronder vind je alle getter en setters. Ik ga ervanuit dat je weet wat deze zijn en doen.
      */
-
     public Long getId() {
-        return id;
+        return userId;
     }
 
     public void setId(Long id) {
-        this.id = id;
+        this.userId = id;
     }
 
     public String getName() {
@@ -67,7 +63,6 @@ public class ApplicationUser {
     public void setEmail(String email) {
         this.email = email;
     }
-
 
     public List<Dog> getDogs() {
         return dogs;
