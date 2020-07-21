@@ -1,5 +1,6 @@
 package nl.novi.dbexample.controller;
 
+import nl.novi.dbexample.exception.DogNotFoundException;
 import nl.novi.dbexample.model.ApplicationUser;
 import nl.novi.dbexample.model.Dog;
 import nl.novi.dbexample.service.ApplicationUserRepository;
@@ -43,17 +44,22 @@ public class DogController {
 
     @GetMapping(value = "/api/dog/{id}")
     public Dog getDog(@PathVariable Long id) {
+        /* Oude code voordat we een exceptie hadden.
         Optional<Dog> dog = dogRepository.findById(id);
         if(dog.isPresent()) {
             return dog.get();
         }
         return null;
+        */
+        return dogRepository.findById(id).orElseThrow(
+                () -> new DogNotFoundException(id));
     }
 
     @PostMapping(value = "/api/dog")
     public Dog saveDog(@RequestBody Dog newDog) {
         return dogRepository.save(newDog);
     }
+
 
     @DeleteMapping(value = "/api/dog/{id}")
     public void deleteDog(@PathVariable Long id) {

@@ -1,6 +1,7 @@
 package nl.novi.dbexample.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -12,11 +13,16 @@ import javax.persistence.ManyToOne;
 @Entity
 public class Dog {
 
+
     /**
      * Voor uitleg id, zie {@link ApplicationUser}
      */
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO, generator="native")
+    @GenericGenerator(
+            name = "native",
+            strategy = "native"
+    )
     private long dogId;
 
     /**
