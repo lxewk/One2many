@@ -4,9 +4,11 @@ import nl.novi.dbexample.model.ApplicationUser;
 import nl.novi.dbexample.model.Dog;
 import nl.novi.dbexample.service.ApplicationUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -29,6 +31,34 @@ public class ApplicationUserController {
     public ApplicationUser addUser(@RequestBody ApplicationUser newUser) {
         return applicationUserRepository.save(newUser);
     }
+
+
+    @DeleteMapping(value = "/api/user/{id}")
+    public String deleteUser(@PathVariable long id) {
+        Optional<ApplicationUser> user = applicationUserRepository.findById(id);
+
+        if(user.isPresent()) {
+            applicationUserRepository.deleteById(id);
+            return "User met id " + user.get().getId() + " is verwijderd";
+        }
+        return "User niet gevonden";
+    }
+
+    @PutMapping(value = "/api/user/{id}")
+    public ApplicationUser updateUserById(@PathVariable long id, @RequestBody ApplicationUser updatedUser) {
+        return applicationUserRepository.findById(id).map(
+                user -> {
+                 user.setName(updatedUser.getName());
+                 user.setEmail(updatedUser.getEmail());
+                 return applicationUserRepository.save(user);
+                })
+                // Kan de user niet vinden in database
+                .orElseGet(() -> {
+                    updatedUser.setId(id);
+                    return applicationUserRepository.save(updatedUser);
+                });
+    }
+
 
     @PostMapping("/api/user/fill")
     public ApplicationUser addTestUsers() {
