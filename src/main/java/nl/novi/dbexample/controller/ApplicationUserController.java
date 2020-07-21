@@ -1,5 +1,6 @@
 package nl.novi.dbexample.controller;
 
+import nl.novi.dbexample.exception.UserNotFoundException;
 import nl.novi.dbexample.model.ApplicationUser;
 import nl.novi.dbexample.model.Dog;
 import nl.novi.dbexample.service.ApplicationUserRepository;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -23,8 +25,8 @@ public class ApplicationUserController {
 
     @GetMapping(value = "/api/user/{id}")
     public ApplicationUser getUserById(@PathVariable Long id) {
-        Optional<ApplicationUser> user = applicationUserRepository.findById(id);
-        return user.orElse(null);
+        return applicationUserRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException(id));
     }
 
     @PostMapping(value = "/api/user/")
@@ -41,7 +43,7 @@ public class ApplicationUserController {
             applicationUserRepository.deleteById(id);
             return "User met id " + user.get().getId() + " is verwijderd";
         }
-        return "User niet gevonden";
+        throw new UserNotFoundException("Hallo, ik besta niet");
     }
 
     @PutMapping(value = "/api/user/{id}")
@@ -57,6 +59,28 @@ public class ApplicationUserController {
                     updatedUser.setId(id);
                     return applicationUserRepository.save(updatedUser);
                 });
+    }
+
+    @PutMapping("/api/user/{id}/dog") // http://localhost:8080/api/user/1/dog
+    public ApplicationUser addDogToUser(@PathVariable long id,
+                                        @RequestBody Dog newDog) {
+        Optional<ApplicationUser> user =
+                applicationUserRepository.findById(id);
+
+        if(user.isPresent()) {
+            ApplicationUser userFromDb = user.get();
+            List<Dog> currentDogs = userFromDb.getDogs();
+
+            newDog.setOwner(userFromDb);
+
+            currentDogs.add(newDog);
+            userFromDb.setDogs(currentDogs);
+
+            return applicationUserRepository.save(userFromDb);
+        }
+
+        return null;
+
     }
 
 

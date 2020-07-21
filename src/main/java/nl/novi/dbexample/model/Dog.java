@@ -14,6 +14,8 @@ import javax.persistence.ManyToOne;
 public class Dog {
 
 
+
+
     /**
      * Voor uitleg id, zie {@link ApplicationUser}
      */

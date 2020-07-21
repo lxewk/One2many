@@ -17,6 +17,14 @@ import java.util.List;
 @Entity
 public class ApplicationUser {
 
+    /*
+    {
+        "name": "Nick",
+        "email": "n@n.nl"
+    }
+
+     */
+
     /**
      * We laten op regel X hibernate het beste generation-type selecteren. Je kunt er hier meer over lezen:
      * https://thorben-janssen.com/jpa-generate-primary-keys/
@@ -28,7 +36,7 @@ public class ApplicationUser {
     @GeneratedValue(strategy = GenerationType.AUTO, generator="native")
     @GenericGenerator(name = "native", strategy = "native"
     )
-    private Long userId;
+    private long userId;
 
     /**
      * Deze twee spreken voor zich
@@ -53,11 +61,11 @@ public class ApplicationUser {
     /*
     Hieronder vind je alle getter en setters. Ik ga ervanuit dat je weet wat deze zijn en doen.
      */
-    public Long getId() {
+    public long getId() {
         return userId;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.userId = id;
     }
 

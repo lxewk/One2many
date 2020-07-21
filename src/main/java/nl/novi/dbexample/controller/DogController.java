@@ -66,15 +66,19 @@ public class DogController {
         dogRepository.deleteById(id);
     }
 
-    @PostMapping(value = "/api/user/{userId}")
-    public Dog addDogToUser(@PathVariable Long userId, @RequestBody Dog dog) {
-        Optional<ApplicationUser> user = applicationUserRepository.findById(userId);
+    @PostMapping(value = "/api/dog/{userid}")
+    public Dog addDogToUserById(@PathVariable long userid,
+                                @RequestBody Dog newDog) {
 
+        Optional<ApplicationUser> user =
+                applicationUserRepository.findById(userid);
         if(user.isPresent()) {
-            dog.setOwner(user.get());
-            return dogRepository.save(dog);
+            newDog.setOwner(user.get());
+            return dogRepository.save(newDog);
         }
 
         return null;
     }
+
+
 }
