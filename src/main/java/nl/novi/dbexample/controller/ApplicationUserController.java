@@ -3,7 +3,7 @@ package nl.novi.dbexample.controller;
 import nl.novi.dbexample.exception.UserNotFoundException;
 import nl.novi.dbexample.model.ApplicationUser;
 import nl.novi.dbexample.model.Dog;
-import nl.novi.dbexample.service.ApplicationUserRepository;
+import nl.novi.dbexample.service.ApplicationUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,17 +21,16 @@ import java.util.Optional;
 public class ApplicationUserController {
 
     @Autowired
-    private ApplicationUserRepository applicationUserRepository;
+    private ApplicationUserService applicationUserService;
 
     @GetMapping(value = "/api/user/{id}")
     public ApplicationUser getUserById(@PathVariable Long id) {
-        return applicationUserRepository.findById(id)
-                .orElseThrow(() -> new UserNotFoundException(id));
+        return applicationUserService.getUserById(id);
     }
 
     @PostMapping(value = "/api/user/")
     public ApplicationUser addUser(@RequestBody ApplicationUser newUser) {
-        return applicationUserRepository.save(newUser);
+        return applicationUserService.addUser(newUser);
     }
 
 
@@ -48,17 +47,7 @@ public class ApplicationUserController {
 
     @PutMapping(value = "/api/user/{id}")
     public ApplicationUser updateUserById(@PathVariable long id, @RequestBody ApplicationUser updatedUser) {
-        return applicationUserRepository.findById(id).map(
-                user -> {
-                 user.setName(updatedUser.getName());
-                 user.setEmail(updatedUser.getEmail());
-                 return applicationUserRepository.save(user);
-                })
-                // Kan de user niet vinden in database
-                .orElseGet(() -> {
-                    updatedUser.setId(id);
-                    return applicationUserRepository.save(updatedUser);
-                });
+        return applicationUserService.updateUserById(id, updatedUser);
     }
 
     @PutMapping("/api/user/{id}/dog") // http://localhost:8080/api/user/1/dog
