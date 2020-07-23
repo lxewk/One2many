@@ -13,9 +13,6 @@ import javax.persistence.ManyToOne;
 @Entity
 public class Dog {
 
-
-
-
     /**
      * Voor uitleg id, zie {@link ApplicationUser}
      */

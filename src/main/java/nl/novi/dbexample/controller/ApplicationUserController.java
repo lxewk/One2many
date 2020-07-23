@@ -71,7 +71,9 @@ public class ApplicationUserController {
             ApplicationUser userFromDb = user.get();
             List<Dog> currentDogs = userFromDb.getDogs();
 
-            newDog.setOwner(userFromDb);
+            if(newDog.getOwner() == null || newDog.getOwner().getId() != id) {
+                newDog.setOwner(userFromDb);
+            }
 
             currentDogs.add(newDog);
             userFromDb.setDogs(currentDogs);
