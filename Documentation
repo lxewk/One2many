@@ -1,0 +1,7 @@
+refactoring DogController
+-- repository 'dingen' naar de Persistence layer
+-- repositories moeten via de Service layer lopen en niet via de Controller layer
+
+-- Controller layer is 'doorgeefluik' --
+
+-- Persistence : in Java wereld -> opslaan van data

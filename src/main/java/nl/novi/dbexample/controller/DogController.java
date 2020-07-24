@@ -1,10 +1,7 @@
 package nl.novi.dbexample.controller;
 
-import nl.novi.dbexample.exception.DogNotFoundException;
-import nl.novi.dbexample.model.ApplicationUser;
 import nl.novi.dbexample.model.Dog;
-import nl.novi.dbexample.persistence.ApplicationUserRepository;
-import nl.novi.dbexample.persistence.DogRepository;
+import nl.novi.dbexample.service.IDogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,10 +17,7 @@ import java.util.Optional;
 public class DogController {
 
     @Autowired
-    private DogRepository dogRepository;
-
-    @Autowired
-    private ApplicationUserRepository applicationUserRepository;
+    private IDogService dogService;
 
     /**
          {
@@ -37,13 +31,12 @@ public class DogController {
      */
 
     @GetMapping(value = "/api/dog")
-    public List<Dog> getDogs() {
-        List<Dog> dogList = dogRepository.findAll();
-        return dogList;
+    public List<Dog> getDogs() { return dogService.getDogs();
     }
 
     @GetMapping(value = "/api/dog/{id}")
-    public Dog getDog(@PathVariable Long id) {
+    public Dog getDogById(@PathVariable Long id) {
+        return dogService.getDogById(id);
         /* Oude code voordat we een exceptie hadden.
         Optional<Dog> dog = dogRepository.findById(id);
         if(dog.isPresent()) {
@@ -51,33 +44,22 @@ public class DogController {
         }
         return null;
         */
-        return dogRepository.findById(id).orElseThrow(
-                () -> new DogNotFoundException(id));
     }
 
     @PostMapping(value = "/api/dog")
     public Dog saveDog(@RequestBody Dog newDog) {
-        return dogRepository.save(newDog);
+        return dogService.saveDog(newDog);
     }
 
-
     @DeleteMapping(value = "/api/dog/{id}")
-    public void deleteDog(@PathVariable Long id) {
-        dogRepository.deleteById(id);
+    public String deleteDog(@PathVariable Long id) {
+        return dogService.deleteDog(id);
     }
 
     @PostMapping(value = "/api/dog/{userid}")
     public Dog addDogToUserById(@PathVariable long userid,
                                 @RequestBody Dog newDog) {
-
-        Optional<ApplicationUser> user =
-                applicationUserRepository.findById(userid);
-        if(user.isPresent()) {
-            newDog.setOwner(user.get());
-            return dogRepository.save(newDog);
-        }
-
-        return null;
+        return dogService.saveDog(newDog);
     }
 
 
