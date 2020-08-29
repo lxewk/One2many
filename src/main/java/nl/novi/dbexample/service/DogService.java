@@ -45,11 +45,11 @@ public class DogService implements IDogService {
     }
 
     @Override
-    public Dog addDogToUserById(Long userid, Dog newDog) {
+    public Dog addDogToUser(Long id, Dog newDog) {
         SimpleJpaRepository applicationUserRepository = null;
 
         Optional<ApplicationUser> user =
-                applicationUserRepository.findById(userid);
+                applicationUserRepository.findById(id);
         if(user.isPresent()) {
             newDog.setOwner(user.get());
             return dogRepository.save(newDog);

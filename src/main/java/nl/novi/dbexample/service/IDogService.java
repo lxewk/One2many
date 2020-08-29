@@ -9,5 +9,5 @@ public interface IDogService {
     Dog getDogById(Long id);
     Dog saveDog(Dog newDog);
     String deleteDog(Long id);
-    Dog addDogToUserById(Long userid, Dog newDog);
+    Dog addDogToUser(Long userid, Dog newDog);
 }
